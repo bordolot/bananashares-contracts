@@ -1,0 +1,1 @@
+Always move this folder up and change the name from `move-up.vscode` to `.vscode`
