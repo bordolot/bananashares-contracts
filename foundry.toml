@@ -4,3 +4,21 @@ out = "out"
 libs = ["lib"]
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
+
+optimizer = true
+# optimizer_runs = 1000
+
+[fuzz]
+# runs = 1
+# runs = 10000
+# seed = '0x12334333333333'
+
+[invariant]
+# runs = 1
+# runs = 64
+# depth = 15 #by default
+# depth = 50
+fail_on_revert = true
+
+# to run terminal commands
+# ffi = true
