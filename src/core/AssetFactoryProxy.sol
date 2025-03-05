@@ -43,6 +43,7 @@ contract AssetFactoryProxy is ERC1967Proxy, AssetFactoryStorage {
     ) ERC1967Proxy(_implementation, _data) {
         // `bananasharesTokenAddr` must be specified in the implementation
         // bananasharesTokenAddr = _bananasharesTokenAddr;
+        protocolDeploymentBlockNr = block.number;
         globalSettings = Asset_Structs.GlobalSettings({
             commission_for_privileged: _commission_for_privileged,
             commission_for_protocol: _commission_for_protocol,

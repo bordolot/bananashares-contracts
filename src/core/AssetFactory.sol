@@ -61,7 +61,7 @@ contract AssetFactory is
         uint256 _protocolDeploymentDate
     ) {
         bananasharesTokenAddr = _bananasharesTokenAddr;
-        protocolDeploymentDate = _protocolDeploymentDate;
+        protocolDeploymentBlockNr = _protocolDeploymentDate;
     }
 
     // -----------------
@@ -80,7 +80,7 @@ contract AssetFactory is
     //   Write Functions
     // -----------------
 
-    /// @notice Sends the token minting order to the Bananashares Token contract.
+    /// @notice Sends the token minting order to the BananasharesToken contract.
     /// @param _tokenReceiver_1 The address of the token receiver (regular)
     /// @param _tokenReceiver_2 The address of the token receiver (privileged)
     /// @param _numberOfAssetShares The number of shares in an `AssetFactoryProxy` sold by a privileged shareholder.
@@ -100,7 +100,7 @@ contract AssetFactory is
         if (_availableToMint == 0) {
             return (0, 0);
         }
-        if (block.number > protocolDeploymentDate + EARLY_PERIOD) {
+        if (block.number > protocolDeploymentBlockNr + EARLY_PERIOD) {
             _divisor = SECOND_DIVISOR;
         } else {
             _divisor = FIRST_DIVISOR;
@@ -110,6 +110,11 @@ contract AssetFactory is
         }
 
         _totalValueToMint = _numberOfAssetShares / _divisor;
+
+        if (_totalValueToMint > ((TOTAL_SUPPLY / _divisor) - _alreadyMinted)) {
+            _totalValueToMint = (TOTAL_SUPPLY / _divisor) - _alreadyMinted;
+        }
+
         if (_totalValueToMint == 0) {
             return (0, 0);
         }
@@ -209,6 +214,7 @@ contract AssetFactory is
         });
     }
 
+    // @TODO change contract to emit name of new asset
     /**
      *  @notice Creates the new `AssetInstanceProxy` contract.
      *  @param _nameOfAsset The title of the asset.
@@ -244,7 +250,8 @@ contract AssetFactory is
             AssetInstancesByHash[_assetHash] = address(_newAssetInstance);
             emit AssetInstanceCreated(
                 address(msg.sender),
-                address(_newAssetInstance)
+                address(_newAssetInstance),
+                _nameOfAsset
             );
         } catch Error(string memory _failReason) {
             emit AssetInstanceCreationFailure(address(msg.sender), _failReason);

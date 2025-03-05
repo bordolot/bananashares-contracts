@@ -69,7 +69,7 @@ contract Test_Unit_Gov is Test, Actors, CreateAssetInstance {
     AssetFactory factoryImplementation;
     AssetInstance assetImplementation;
     AssetFactoryProxy assetFactory;
-    AssetInstanceProxy assetInstance;
+    // AssetInstanceProxy assetInstance;
 
     uint256 minDelay;
     address[] proposers;
@@ -173,12 +173,6 @@ contract Test_Unit_Gov is Test, Actors, CreateAssetInstance {
         );
 
         assetImplementation = new AssetInstance(address(assetFactory));
-
-        console.log("rayman 1", addrFounder);
-        console.log(
-            "rayman 2",
-            IOwnableUpgradeable(address(assetFactory)).owner()
-        );
 
         IAssetFactory(address(assetFactory)).setAssetInstanceImplementation(
             address(assetImplementation)
@@ -473,6 +467,8 @@ contract Test_Unit_Gov is Test, Actors, CreateAssetInstance {
         // vm.assertEq(_numberOfVotes, TOTAL_SUPPLY);
 
         /// Each privileged shareholder must also receive Bananashares Tokens, the amount of which must correspond to the number of shares they originally owned.
+        uint sum = _numberOfTokens;
+
         for (_i = 1; _i < _privileged.length; _i++) {
             _numberOfTokens =
                 IERC20(address(bananasharesToken)).balanceOf(_privileged[_i]) /
@@ -496,7 +492,13 @@ contract Test_Unit_Gov is Test, Actors, CreateAssetInstance {
                     2 +
                     _privileged.length
             );
+            sum += _numberOfTokens;
         }
+
+        uint256 _govTokensMintedInAsset = IAssetInstance(
+            address(assetsAddresses[0])
+        ).getGovTokensMinted();
+        assertEq(_govTokensMintedInAsset, sum * GOV_TOKEN_DECIMALS);
     }
 
     /// Attempts to mint exact number of the Bananashares Tokens during the buyout by a regular user.

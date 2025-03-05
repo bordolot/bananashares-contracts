@@ -15,15 +15,15 @@ import {IBananasharesToken} from "./IBananasharesToken.sol";
  *  ## Distribution plan:
  *  1. Official Deployment of Bananashares Token on Mainnet.
  *      |
- *      -- Minting of 300_000_000 for the protocol founder that is 30% of `MAX_SUPPLY`.
+ *      -- Minting of 300_000_000 for the protocol founder which is 30% of `MAX_SUPPLY`.
  *
  *  2. Gathering funds for smart contracts audits and further development.
  *      |
- *      -- Minting of 100_000_000 for external investors that is 10% of `MAX_SUPPLY`.
+ *      -- Minting of up to 100_000_000 for external investors which is 10% of `MAX_SUPPLY`.
  *
  *  3. Official Deployment of the protocol contracts on Mainnet.
  *      |
- *      -- Minting of 600_000_000 for initial users that is 60% of `MAX_SUPPLY`.
+ *      -- Minting of 600_000_000 to 700_000_000 for initial users  which accounts for 60-70% of `MAX_SUPPLY`.
  *
  *
  *  ## Minting mechanism for initial users:
@@ -131,6 +131,7 @@ contract BananasharesToken is
         }
         _update(address(0), beneficiary, _valueToMint);
         _delegate(beneficiary, beneficiary);
+        emit TokenMinted(beneficiary, value * GOV_TOKEN_DECIMALS);
     }
 
     function _availableToMint() internal view returns (uint256) {

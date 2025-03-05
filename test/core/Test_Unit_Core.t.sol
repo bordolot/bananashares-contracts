@@ -432,7 +432,11 @@ contract Test_AssetFactory is
 
         vm.expectEmit(true, false, false, true);
 
-        emit AssetInstanceCreated(addressMike, address(0));
+        emit AssetInstanceCreated(
+            addressMike,
+            address(0),
+            testAsset.nameOfAsset
+        );
         IAssetFactory(address(assetFactory)).createAssetInstance(
             testAsset.nameOfAsset,
             testAsset.authors,

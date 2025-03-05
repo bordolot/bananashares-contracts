@@ -108,6 +108,7 @@ contract BananasharesDeployCore is Script, BananasharesDeploySettings {
         vm.stopBroadcast();
         console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         console.log("");
+        console.log("block number:", block.number);
         console.log("BananasharesToken address: ", address(_bananasharesToken));
         console.log("BananasharesGov address: ", address(_bananasharesGov));
         console.log("AssetsFactory address: ", address(_assetFactory));

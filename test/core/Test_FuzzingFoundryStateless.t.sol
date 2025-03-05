@@ -121,7 +121,7 @@ contract Test_FuzzinngStateless is CoreTest_AssetsFactory, AssetFactoryEvents {
             emit AssetInstanceCreationFailure(addressMike, "wrong suply");
         } else {
             vm.expectEmit(true, false, false, true);
-            emit AssetInstanceCreated(addressMike, address(0));
+            emit AssetInstanceCreated(addressMike, address(0), _title);
         }
 
         //     else {

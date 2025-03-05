@@ -9,6 +9,7 @@ import {IAccessControl} from "@openzeppelin/contracts/access/IAccessControl.sol"
 
 interface IBananasharesToken is IERC20, IERC20Permit, IVotes, IAccessControl {
     error ProtocolReachedMaxSupply();
+    event TokenMinted(address beneficiary, uint256 amount);
     function MAX_SUPPLY() external view returns (uint256);
     function mint(address beneficiary, uint256 value) external;
     function getAvailableToMint() external view returns (uint256);

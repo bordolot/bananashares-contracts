@@ -14,8 +14,8 @@ contract AssetFactoryStorage is IAssetFactory_read, AssetFactoryConst {
     /// @dev The address of Bananashares Token contract.
     address internal immutable bananasharesTokenAddr;
 
-    /// @dev The protocol deployment date.
-    uint256 internal immutable protocolDeploymentDate;
+    /// @dev The protocol deployment date in block numbers.
+    uint256 internal immutable protocolDeploymentBlockNr;
 
     // ---------------------
     //    Constants
@@ -93,5 +93,9 @@ contract AssetFactoryStorage is IAssetFactory_read, AssetFactoryConst {
         returns (Asset_Structs.GlobalSettings memory)
     {
         return globalSettings;
+    }
+
+    function getProtocolDeploymentBlockNr() external view returns (uint256) {
+        return protocolDeploymentBlockNr;
     }
 }

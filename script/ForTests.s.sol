@@ -79,8 +79,8 @@ contract ForTestsScript is Script {
 
     function setUp() public {
         if (addresses.length == 0) {
-            addresses.push(address(0x75537828f2ce51be7289709686A69CbFDbB714F1));
-            addresses.push(address(0xE451980132E65465d0a498c53f0b5227326Dd73F));
+            addresses.push(address(0x8aCd85898458400f7Db866d53FCFF6f0D49741FF));
+            addresses.push(address(0xe082b26cEf079a095147F35c9647eC97c2401B83));
         }
     }
 
@@ -232,6 +232,16 @@ contract ForTestsScript is Script {
         );
     }
 
+    function try_createOffer_2(
+        uint256 _addrNr,
+        uint256 _by_privateKey,
+        uint24 _amount,
+        uint96 _value
+    ) public {
+        vm.broadcast(_by_privateKey);
+        IAssetInstance(addresses[_addrNr]).makeSellOffer(_amount, _value);
+    }
+
     function try_buyShares(
         uint256 _addrNr,
         uint256 _by_privateKey,
@@ -254,6 +264,30 @@ contract ForTestsScript is Script {
         (bool ok, ) = addresses[_addrNr].call{
             value: pricePerShareToPay * _amount
         }(abi.encodeWithSignature(sig, _from, _amount, _sellLimit));
+        assert(ok);
+    }
+
+    function try_buyShares_2(
+        address _addr,
+        uint256 _by_privateKey,
+        address _from,
+        uint24 _amount,
+        uint96 _sellLimit
+    ) public {
+        string memory sig = "buyShares(address,uint24,uint96)";
+        uint256 index = IAssetInstance(_addr).getOffersIndex(_from);
+        Asset_Structs.Offer memory offer = IAssetInstance(_addr).getOffer(
+            index
+        );
+
+        uint256 pricePerShareToPay = uint256(offer.value) +
+            uint256(offer.privilegedFee) +
+            uint256(offer.ownerFee);
+
+        vm.broadcast(_by_privateKey);
+        (bool ok, ) = _addr.call{value: pricePerShareToPay * _amount}(
+            abi.encodeWithSignature(sig, _from, _amount, _sellLimit)
+        );
         assert(ok);
     }
 
@@ -497,23 +531,21 @@ contract ForTestsScript is Script {
     }
 
     function run() public {
-        _createTestAsset(
-            // payable(address(0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512)),
-            payable(address(0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6)),
-            1
-        );
         // _createTestAsset(
         //     // payable(address(0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512)),
-        //     payable(address(0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6)),
+        //     payable(address(0x8A791620dd6260079BF849Dc5567aDC3F2FdC318)),
+        //     1
+        // );
+        // _createTestAsset(
+        //     // payable(address(0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512)),
+        //     payable(address(0x8A791620dd6260079BF849Dc5567aDC3F2FdC318)),
         //     2
         // );
-
         // _createTestAssetFullShareholders(
         //     payable(address(0x59562521C316c300EAc9860f8f46869C28acd489))
         // );
         // callBunchOfBuyShares(0, false, true);
         // callBunchOfBuyShares(1, false, true);
-
         // callBunchOfBuyShares(0, true);
         // try_signLicense(0, 0);
         // try_signSpecificLicense(
@@ -535,5 +567,15 @@ contract ForTestsScript is Script {
         // try_getLicense(0, 1); //(addr index), ( license index)
         // try_getLicense(0, 2); //(addr index), ( license index)
         // try_getLicense(0, 3); //(addr index), ( license index)
+        // try_buyShares_2(
+        //     0x94099942864EA81cCF197E9D71ac53310b1468D8,
+        //     privateKeyMark,
+        //     god,
+        //     2000,
+        //     standardBuyValues.newSellLimit
+        // );
+        // try_createOffer(1, privateKeyVoldemort);
+        // try_createOffer_2(1, privateKeyVoldemort, 26666, 1e12);
+        try_buyShares(0, privateKeyMark, god, 4000, 2e12);
     }
 }
