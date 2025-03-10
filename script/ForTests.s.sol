@@ -531,16 +531,16 @@ contract ForTestsScript is Script {
     }
 
     function run() public {
-        // _createTestAsset(
-        //     // payable(address(0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512)),
-        //     payable(address(0x8A791620dd6260079BF849Dc5567aDC3F2FdC318)),
-        //     1
-        // );
-        // _createTestAsset(
-        //     // payable(address(0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512)),
-        //     payable(address(0x8A791620dd6260079BF849Dc5567aDC3F2FdC318)),
-        //     2
-        // );
+        _createTestAsset(
+            // payable(address(0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512)),
+            payable(address(0x8A791620dd6260079BF849Dc5567aDC3F2FdC318)),
+            1
+        );
+        _createTestAsset(
+            // payable(address(0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512)),
+            payable(address(0x8A791620dd6260079BF849Dc5567aDC3F2FdC318)),
+            2
+        );
         // _createTestAssetFullShareholders(
         //     payable(address(0x59562521C316c300EAc9860f8f46869C28acd489))
         // );
@@ -576,6 +576,6 @@ contract ForTestsScript is Script {
         // );
         // try_createOffer(1, privateKeyVoldemort);
         // try_createOffer_2(1, privateKeyVoldemort, 26666, 1e12);
-        try_buyShares(0, privateKeyMark, god, 4000, 2e12);
+        // try_buyShares(0, privateKeyMark, god, 4000, 2e12);
     }
 }
