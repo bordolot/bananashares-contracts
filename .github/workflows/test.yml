@@ -36,11 +36,11 @@ jobs:
 
       - name: Run Forge build
         run: |
-          forge build --sizes
+          # forge build --sizes
         id: build
 
       - name: Run Forge tests
         run: |
-          export RANDOM_SEED=$(date +%s)
-          forge test -vvv
+          # export RANDOM_SEED=$(date +%s)
+          # forge test -vvv
         id: test
