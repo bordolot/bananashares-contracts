@@ -14,9 +14,9 @@ contract Test_FuzzinngStatefull is StdInvariant, CoreTest_AssetsFactory {
     /// @dev before each test run in your console `export RANDOM_SEED=$(date +%s)`
     /// @dev or run each test with `--ffi` flag
     function setUp() public {
-        // uint256 pcTimestamp = vm.envUint("RANDOM_SEED");
+        uint256 pcTimestamp = vm.envUint("RANDOM_SEED");
         vm.roll(1);
-        uint256 pcTimestamp = _generateSeed();
+        // uint256 pcTimestamp = _generateSeed();
         uint256 randomSeed = uint256(keccak256(abi.encodePacked(pcTimestamp)));
 
         _createAssetFactory();

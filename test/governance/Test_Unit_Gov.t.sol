@@ -813,8 +813,6 @@ contract Test_Unit_Gov is Test, Actors, CreateAssetInstance {
         }
         vm.roll(block.number + 1);
 
-        seed = _generateSeed();
-
         assertEq(
             IERC20(address(bananasharesToken)).balanceOf(addrUser_1),
             ((_numberOfAssetInstance_part1 + _numberOfAssetInstance_part2) *
