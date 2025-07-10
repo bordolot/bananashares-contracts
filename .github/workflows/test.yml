@@ -41,5 +41,6 @@ jobs:
 
       - name: Run Forge tests
         run: |
+          export RANDOM_SEED=$(date +%s)
           forge test -vvv
         id: test
